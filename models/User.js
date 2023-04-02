@@ -15,8 +15,7 @@ const userSchema = new Schema(
             required: true,
             unique: true,
             validate: {
-                validator: () => Promise.resolve(false),
-                message: 'Email validation failed'
+                validator: function (v) { return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v); }
             }
         },
         thoughts: [
@@ -52,19 +51,5 @@ userSchema
 
 
 const User = model('user', userSchema);
-const user = new User();
-
-user.email = 'test@test.co';
-user.name = 'test';
-
-let error;
-try {
-    await user.validate();
-} catch (err) {
-    error = err;
-}
-assert.ok(error);
-assert.equal(error.errors['name'].message, 'Oops!');
-assert.equal(error.errors['email'].message, 'Email validation failed');
 
 module.exports = User;
