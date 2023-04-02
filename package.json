@@ -1,0 +1,23 @@
+{
+  "name": "backend_socialmedia_api",
+  "version": "1.0.0",
+  "description": "This project will showcase how to build an API for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index",
+    "dev": "nodemon index",
+    "seed": "node utils/seed",
+    "heroku-postbuild": "node utils/seed.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.9.2"    
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.9"
+  }
+}
