@@ -8,7 +8,7 @@ module.exports = {
     },
     async getSingleThought(req, res) {
         try {
-            await Thought.findOne({ _id: req.params.userId })
+            await Thought.findOne({ _id: req.params.thoughtId })
                 .select('-__v')
                 .populate('reactions')
                 .then((thought) =>
@@ -27,7 +27,7 @@ module.exports = {
                 .then((thought) => {
                     return User.findOneAndUpdate(
                         { _id: req.body.userId },
-                        { $addToSet: { posts: thought._id } },
+                        { $addToSet: { thoughts: thought._id } },
                         { new: true }
                     );
                 })
@@ -84,8 +84,8 @@ module.exports = {
         try {
             reactionSchema.create(req.body).then((post) => {
                 return Thought.findOneAndUpdate(
-                    { _id: req.body.reactionId },
-                    { $addToSet: { reactions: post.body } },
+                    { _id: req.params.thoughtId },
+                    { $addToSet: { reactions: { reactions: post._id } } },
                     { new: true });
             })
                 .then((user) =>

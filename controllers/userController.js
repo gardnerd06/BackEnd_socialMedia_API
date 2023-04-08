@@ -67,6 +67,30 @@ module.exports = {
             return res.status(500).json(err);
         }
     },
+
+    // add a friend
+    async addFriend(req, res) {
+        try {
+
+
+
+
+        } catch (err) {
+            return res.status(500).json(err);
+        }
+    },
+
+    // delete a friend
+    async deleteFriend(req, res) {
+        try {
+
+
+
+
+        } catch (err) {
+            return res.status(500).json(err);
+        }
+    }
 };
 
 
