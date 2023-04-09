@@ -8,6 +8,6 @@ router
     .get(getSingleThought)
     .put(updateThought)
     .delete(deleteThought);
-
+// route for adding and deleting reactions
 router.route('/:thoughtId/reactions').post(postReaction).delete(deleteReaction);
 module.exports = router;

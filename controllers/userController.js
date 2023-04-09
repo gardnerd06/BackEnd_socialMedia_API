@@ -6,7 +6,6 @@ module.exports = {
         User.find()
             .then((users) => res.json(users))
             .catch((err) => res.status(500).json(err));
-        // res.send("you've hit the right route!")
     },
     // find a single user
     async getSingleUser(req, res) {
@@ -71,10 +70,15 @@ module.exports = {
     // add a friend
     async addFriend(req, res) {
         try {
-
-
-
-
+            const addedfriend = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $addToSet: { friends: req.params.friendId } },
+                { new: true }
+            );
+            if (!addedfriend) {
+                return res.status(404).json({ message: "add unsuccessful" })
+            }
+            return res.status(200).json(addedfriend)
         } catch (err) {
             return res.status(500).json(err);
         }
@@ -83,6 +87,17 @@ module.exports = {
     // delete a friend
     async deleteFriend(req, res) {
         try {
+            try {
+                const user = await User.findOneAndUpdate({ _id: req.params.userId },
+                    { $pull: { friends: req.params.friendId } });
+
+                if (!user) {
+                    return res.status(404).json({ message: 'No user with that ID' });
+                }
+                return res.json({ message: 'Friend deleted!' })
+            } catch (err) {
+                return res.status(500).json(err);
+            }
 
 
 

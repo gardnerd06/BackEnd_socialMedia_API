@@ -1,4 +1,4 @@
-const { Thought, User, reactionSchema } = require('../models');
+const { Thought, User } = require('../models');
 // exporting routes to be used on other pages
 module.exports = {
     getThoughts(req, res) {
@@ -25,7 +25,7 @@ module.exports = {
         try {
             Thought.create(req.body)
                 .then((thought) => {
-                    return User.findOneAndUpdate(
+                    User.findOneAndUpdate(
                         { _id: req.body.userId },
                         { $addToSet: { thoughts: thought._id } },
                         { new: true }
@@ -38,8 +38,6 @@ module.exports = {
                             .json({ message: 'Post created, but found no user with that ID' })
                         : res.json('Created the post 🎉')
                 )
-
-            // return res.json(createdThought);
         } catch (err) {
             return res.status(500).json(err);
         }
@@ -48,7 +46,7 @@ module.exports = {
     async updateThought(req, res) {
         try {
             const updatedThought = await Thought.findOneAndUpdate(
-                { _id: req.params.userId },
+                { _id: req.params.thoughtId },
                 { $set: req.body },
                 { runValidators: true, new: true }
             );
@@ -82,12 +80,12 @@ module.exports = {
     // post a reaction
     async postReaction(req, res) {
         try {
-            reactionSchema.create(req.body).then((post) => {
-                return Thought.findOneAndUpdate(
-                    { _id: req.params.thoughtId },
-                    { $addToSet: { reactions: { reactions: post._id } } },
-                    { new: true });
-            })
+
+            await Thought.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                { $addToSet: { reactions: req.body } },
+                { new: true })
+
                 .then((user) =>
                     !user
                         ? res
@@ -95,10 +93,6 @@ module.exports = {
                             .json({ message: 'Reaction Posted, but found no user with that ID' })
                         : res.json('Created the Reaction 🎉')
                 )
-            // if (!createdReaction) {
-            //     return res.status(404).json({ message: 'error creating reaction' })
-            // }
-            // return res.json(createdReaction)
         } catch (err) {
             return res.status(500).json(err);
         }
@@ -109,21 +103,15 @@ module.exports = {
     // delete a reaction
     async deleteReaction(req, res) {
         try {
-            Thought.findOneAndUpdate(
+            await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId },
-                { $pull: { reactions: { reactionId: req.params.reactionId } } },
-                { runValidators: true, new: true }
+                { $pull: { reactions: { reactionId: req.body.reactionId } } },
+
             )
                 .then((thought) =>
-                    !student
+                    !thought
                         ? res.status(404).json({ message: 'No reaction with that ID' })
                         : res.json(thought))
-            // if (!deletedReaction) {
-            //     return res.status(404).json({ message: 'No reaction with that ID' });
-            // }
-
-            // return res.json({ message: 'Reaction deleted!' })
-
         } catch (err) {
             return res.status(500).json(err);
         }

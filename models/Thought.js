@@ -1,5 +1,5 @@
 const { Schema, model, Types } = require('mongoose');
-
+// creating a schema for reactions
 const reactionSchema = new Schema({
     reactionId: { type: Schema.Types.ObjectId, default: () => new Types.ObjectId(), },
     reactionBody: { type: String, required: true, max: 280, },
@@ -32,10 +32,7 @@ const thoughtSchema = new Schema(
 
 );
 
-
-
-
-
+// storing a thought model in a variable
 const Thought = model('thought', thoughtSchema);
 
-module.exports = { Thought, reactionSchema };
+module.exports = { Thought };
