@@ -7,6 +7,7 @@
 This project will showcase how to build an API for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list. In this project my goal was to build a backed of an api using Mongoose, Mongodb and node.js. Insomina was used to showcase the interaction with the server.
 
 [GitHub]  <https://github.com/gardnerd06/BackEnd_socialMedia_API>
+[Video] <https://drive.google.com/file/d/1g5iHTFLzBoO6uwFK4dcLHreUSRXCbCaS/view>
 
 ## Table of Content
 
