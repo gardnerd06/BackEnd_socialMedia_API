@@ -20,7 +20,8 @@ Daniel Gardner
 
 ## Screenshots
 
-## How to Contribute
+## How ![Screenshot (39)](https://user-images.githubusercontent.com/115792714/230926728-bfb6df72-f427-4ff5-8e34-d7f1e22df8d4.png)
+to Contribute
 
 If you'd like to contribute, here's how to reach me with additional questions [email]gardnerd06@gmail.com!
 
