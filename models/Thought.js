@@ -4,7 +4,7 @@ const reactionSchema = new Schema({
     reactionId: { type: Schema.Types.ObjectId, default: () => new Types.ObjectId(), },
     reactionBody: { type: String, required: true, max: 280, },
     username: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now(), }
+    createdAt: { type: Date, get: Date, }
 });
 
 const thoughtSchema = new Schema(
@@ -16,7 +16,7 @@ const thoughtSchema = new Schema(
         },
         createdAt: {
             type: Date,
-            default: Date.now(),
+            get: Date,
         },
         username: {
             type: String,
@@ -31,6 +31,7 @@ const thoughtSchema = new Schema(
     }
 
 );
+thoughtSchema.get(function () { });
 
 // storing a thought model in a variable
 const Thought = model('thought', thoughtSchema);
